@@ -6,6 +6,9 @@
 package com;
 
 import java.awt.event.WindowEvent;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,16 +22,27 @@ public class namelist extends javax.swing.JFrame {
      */
     String year;
   babynamesUI babyname;
+   ArrayList<String> name1 = new ArrayList<String>();
+   ArrayList<String> value1 = new ArrayList<String>();
     public namelist() {
         initComponents();
     }
-    public namelist(babynamesUI b,String s){
-        babyname=b;
-        year=s;
-    initComponents();
-    this.setLocationRelativeTo(null);
-    
+   public namelist(babynamesUI baby,ArrayList<String> name,ArrayList<String> value) {
+       babyname=baby;
+       name1=name;
+       value1=value;
+         initComponents();
+      
+         textArea1.setText("Name     |     Number of Birth");
+          for(int i=0;i<name1.size();i++)
+                {
+                    textArea1.setText( textArea1.getText()+" \n"+name1.get(i) +"     |     "+ value1.get(i));                       
+                }
+          textArea1.setEditable(false);
+             this.setLocationRelativeTo(null);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+  
     
 
     /**
@@ -41,9 +55,24 @@ public class namelist extends javax.swing.JFrame {
     private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
-        user = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        textArea1 = new java.awt.TextArea();
 
         jTextField1.setText("jTextField1");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -56,24 +85,18 @@ public class namelist extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(204, Short.MAX_VALUE))
+            .addComponent(textArea1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(258, Short.MAX_VALUE))
+            .addComponent(textArea1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-                       user.setText(year);
+         
     }//GEN-LAST:event_formWindowOpened
  protected void processWindowEvent(WindowEvent e) {
 
@@ -122,7 +145,9 @@ public class namelist extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField user;
+    private java.awt.TextArea textArea1;
     // End of variables declaration//GEN-END:variables
 }
