@@ -13,7 +13,10 @@ import javax.swing.SwingUtilities;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -252,6 +255,7 @@ public class babynamesUI extends javax.swing.JFrame {
     }//GEN-LAST:event_yearActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
         String year1=year.getText();
         String top = topnum.getText();
         String sex;
@@ -262,6 +266,7 @@ public class babynamesUI extends javax.swing.JFrame {
         else
             sex="both";
         try{
+            
             int y=Integer.parseInt(year1);
             int t=Integer.parseInt(top);
             if(!(y>=1994&&y<=2013))
@@ -273,26 +278,77 @@ public class babynamesUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "please enter number less than 100");
             }
             else{
+               ArrayList<String> name = new ArrayList<String>();
+                ArrayList<String> value = new ArrayList<String>();
+           if(sex.equals("male")||sex.equals("female"))
+                {
         String filename=sex+"_cy"+year1+"_top.csv";
-        System.out.print(filename);
+      
       String csvFile = "C:\\Users\\dell\\Desktop\\Baby Names 1944-2013\\"+filename;
 	BufferedReader br = null;
 	String line = "";
 	String cvsSplitBy = ",";
         br = new BufferedReader(new FileReader(csvFile));
+        line = br.readLine();
         int i=0;
 		while ((line = br.readLine()) != null&&i<=t) {
                        
 
 		        // use comma as separator
-			String[] name = line.split(cvsSplitBy);
-
-			System.out.println("name [name= " + name[0] 
-                                 + " , number of birth=" + name[2] + "]");
-
+			String[] names = line.split(cvsSplitBy);
+                       name.add(names[0]);
+                       value.add(names[1]);
+                         
 		i++;
               }
-        namelist list= new namelist(this,filename);
+                }
+                else{
+        String filename1="male_cy"+year1+"_top.csv";
+         String filename2="female_cy"+year1+"_top.csv";
+       
+      String csvFile1 = "C:\\Users\\dell\\Desktop\\Baby Names 1944-2013\\"+filename1;
+      String csvFile2 = "C:\\Users\\dell\\Desktop\\Baby Names 1944-2013\\"+filename2;
+	BufferedReader br1 = null;
+        BufferedReader br2 = null;
+	String line1 = "";
+        String line2 = "";
+	String cvsSplitBy = ",";
+        br1 = new BufferedReader(new FileReader(csvFile1));
+        br2 = new BufferedReader(new FileReader(csvFile2));
+        int i=0;
+        line1 = br1.readLine();
+        line1 = br1.readLine();
+        line2 = br2.readLine();
+        line2 = br2.readLine();
+        while (i<=t) {
+                 // use comma as separator
+                    if(i>0){
+			String[] name1 = line1.split(cvsSplitBy);
+                        String[] name2 = line2.split(cvsSplitBy);
+                        String s1=name1[1].trim();
+                        String s2=name2[1].trim();
+                        int a=Integer.parseInt(s1.substring(1, s1.length()-1));
+                        int b=Integer.parseInt(s2.substring(1, s2.length()-1));
+                        if(a>b)
+                        {
+			  name.add(name1[0]);
+                       value.add(name1[1]);
+                        line1 = br1.readLine();
+                        }
+                        else{
+         
+                          name.add(name2[0]);
+                       value.add(name2[1]);
+                        line2 = br2.readLine();
+                        }
+                    }
+                        
+		i++;
+              
+               }
+                }
+
+           namelist list= new namelist(this,name,value);
        list.setVisible(true);
         setVisible(false);
         dispose();
