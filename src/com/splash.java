@@ -14,7 +14,7 @@ public class splash extends JWindow {
 	private Dimension screensize;
 	private JProgressBar progressBar;
 	private int progress = 0;
-	private int waitTime = 7;
+	private int waitTime = 5;
 		
 	public splash(JFrame parent){
         super(parent);
