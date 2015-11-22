@@ -5,6 +5,7 @@
  */
 package com;
 
+import java.awt.Color;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -17,6 +18,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -67,6 +74,7 @@ public class babynamesUI extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jTextField1 = new javax.swing.JTextField();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         topn = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -77,12 +85,15 @@ public class babynamesUI extends javax.swing.JFrame {
         both = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
         topnum = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
+        nametrend = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        nameentered = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        yearentered = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        male2 = new javax.swing.JRadioButton();
+        female2 = new javax.swing.JRadioButton();
 
         jTextField1.setText("jTextField1");
 
@@ -131,7 +142,7 @@ public class babynamesUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(topnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(topnLayout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(80, 80, 80))
@@ -178,9 +189,15 @@ public class babynamesUI extends javax.swing.JFrame {
 
         jLabel2.getAccessibleContext().setAccessibleDescription("");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Name Trend"));
+        nametrend.setBorder(javax.swing.BorderFactory.createTitledBorder("Name Trend"));
 
         jLabel1.setText("Name : ");
+
+        nameentered.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameenteredActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Year :");
 
@@ -191,61 +208,95 @@ public class babynamesUI extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jLabel6.setText("Sex :");
+
+        buttonGroup2.add(male2);
+        male2.setText("Male");
+        male2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                male2ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup2.add(female2);
+        female2.setText("Female");
+        female2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                female2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout nametrendLayout = new javax.swing.GroupLayout(nametrend);
+        nametrend.setLayout(nametrendLayout);
+        nametrendLayout.setHorizontalGroup(
+            nametrendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nametrendLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(361, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(108, 108, 108))
+                .addGroup(nametrendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(nametrendLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(108, 108, 108))
+                    .addGroup(nametrendLayout.createSequentialGroup()
+                        .addGroup(nametrendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGroup(nametrendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(nametrendLayout.createSequentialGroup()
+                                .addGap(64, 64, 64)
+                                .addComponent(male2)
+                                .addGap(51, 51, 51)
+                                .addComponent(female2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(nametrendLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(nameentered, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5)
+                                .addGap(95, 95, 95)))
+                        .addComponent(yearentered, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(108, 108, 108))))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        nametrendLayout.setVerticalGroup(
+            nametrendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(nametrendLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(nametrendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                    .addComponent(nameentered, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yearentered, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(43, 43, 43)
+                .addGroup(nametrendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(male2)
+                    .addComponent(female2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(topn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(nametrend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(topn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addComponent(nametrend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         topn.getAccessibleContext().setAccessibleName("popularity");
-        jPanel2.getAccessibleContext().setAccessibleName("populatitygraph");
+        nametrend.getAccessibleContext().setAccessibleName("populatitygraph");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -374,11 +425,106 @@ public class babynamesUI extends javax.swing.JFrame {
     }//GEN-LAST:event_bothActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       graph grp =new graph(this);
-       grp.setVisible(true);
-        setVisible(false);
-        dispose();
+      
+       String name=nameentered.getText();
+       String y=yearentered.getText();
+       String sex = null;
+       if(male2.isSelected())
+            sex="male";
+        else if(female2.isSelected())
+            sex="female";
+      int[] Lvalue = new int[70];
+      int[] Lyear=new int[70];
+         int j=0; 
+         try{
+       int year=Integer.parseInt(y);
+       int i=year;
+     
+      while(i<=2013)
+       {
+        String filename=sex+"_cy"+i+"_top.csv";
+        String csvFile = "C:\\Users\\dell\\Desktop\\Baby Names 1944-2013\\"+filename;
+        BufferedReader br = null;
+	String line = "";
+	String cvsSplitBy = ",";
+        br = new BufferedReader(new FileReader(csvFile));
+        line = br.readLine();
+        while ((line = br.readLine()) != null) {
+                       
+                       int val;
+		        // use comma as separator
+			String[] names = line.split(cvsSplitBy);
+                        
+                        
+//                         for (int k=0;k<20;k++)
+//                        {
+//                       temp[k]=s.charAt(k);
+//                        
+//                        }
+                        String s1=names[1].trim();
+                         String s2=names[0].trim();
+                          //System.out.println("name:-"+s1);
+                         if(s1.charAt(0)=='"'){
+                         val=Integer.parseInt(s1.substring(1, s1.length()-1));
+                        }else{
+                         val=Integer.parseInt(s1);
+                        }
+                         if(s2.charAt(0)=='"'){
+                       s2= s2.substring(1, s2.length()-1);
+                        }
+                         //System.out.println("name:-"+s2);
+                        if(s2.equalsIgnoreCase(name)){
+                         Lvalue[j]=val;
+                         Lyear[j]=i;
+                         j++;
+                        }
+                                        
+        }
+                         i++;
+            }
+                }catch(FileNotFoundException e) {
+		e.printStackTrace();
+	} catch(IOException e) {
+		e.printStackTrace();
+	} 
+        catch(Exception e){
+           JOptionPane.showMessageDialog(null, "invalid entry"); 
+           e.printStackTrace();
+         } 
+       //graph grp =new graph(this,Lvalue,Lyear,j);
+       //grp.setVisible(true);
+          DefaultCategoryDataset dataset=new DefaultCategoryDataset();
+        
+         String val="";
+         //textArea1.setText("Year     |     Number of Birth");
+          for(int p=0;p<j;p++)
+                {
+                    val=Integer.toString(Lyear[p]);
+                    dataset.addValue(Lvalue[p], val, val);
+                   // textArea1.setText( textArea1.getText()+" \n"+year[i] +"     |     "+ value[i]);                       
+                }
+           JFreeChart chart=ChartFactory.createAreaChart("Name Trend", "year", "Number of Birth", dataset, PlotOrientation.VERTICAL, false, true, false);
+          CategoryPlot p=chart.getCategoryPlot();
+           p.setRangeGridlinePaint(Color.BLACK);
+           ChartFrame frame=new ChartFrame("Chart for Name Trend", chart);
+           frame.setVisible(true);
+           frame.setSize(1200, 700);
+            frame.setLocationRelativeTo(null);
+            setVisible(false);
+           dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void nameenteredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameenteredActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameenteredActionPerformed
+
+    private void male2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_male2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_male2ActionPerformed
+
+    private void female2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_female2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_female2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -414,7 +560,9 @@ public class babynamesUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton both;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JRadioButton female;
+    private javax.swing.JRadioButton female2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -422,13 +570,15 @@ public class babynamesUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JRadioButton male;
+    private javax.swing.JRadioButton male2;
+    private javax.swing.JTextField nameentered;
+    private javax.swing.JPanel nametrend;
     private javax.swing.JPanel topn;
     private javax.swing.JTextField topnum;
     private javax.swing.JTextField year;
+    private javax.swing.JTextField yearentered;
     // End of variables declaration//GEN-END:variables
 }
