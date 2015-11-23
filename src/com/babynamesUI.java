@@ -16,6 +16,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import org.jfree.chart.ChartFactory;
@@ -320,7 +322,7 @@ public class babynamesUI extends javax.swing.JFrame {
             
             int y=Integer.parseInt(year1);
             int t=Integer.parseInt(top);
-            if(!(y>=1994&&y<=2013))
+            if(!(y>=1944&&y<=2013))
             {
                 JOptionPane.showMessageDialog(null, "please enter year between 1994 and 2013");
              }
@@ -335,11 +337,11 @@ public class babynamesUI extends javax.swing.JFrame {
                 {
         String filename=sex+"_cy"+year1+"_top.csv";
       
-      String csvFile = "C:\\Users\\dell\\Desktop\\Baby Names 1944-2013\\"+filename;
-	BufferedReader br = null;
+      InputStream is = babynamesUI.class.getResourceAsStream("/resourse/"+filename);
+        BufferedReader br = null;
 	String line = "";
 	String cvsSplitBy = ",";
-        br = new BufferedReader(new FileReader(csvFile));
+       br = new BufferedReader(new InputStreamReader(is));
         line = br.readLine();
         int i=0;
 		while ((line = br.readLine()) != null&&i<=t) {
@@ -357,16 +359,16 @@ public class babynamesUI extends javax.swing.JFrame {
         String filename1="male_cy"+year1+"_top.csv";
          String filename2="female_cy"+year1+"_top.csv";
        
-      String csvFile1 = "C:\\Users\\dell\\Desktop\\Baby Names 1944-2013\\"+filename1;
-      String csvFile2 = "C:\\Users\\dell\\Desktop\\Baby Names 1944-2013\\"+filename2;
+     InputStream is1 = babynamesUI.class.getResourceAsStream("/resourse/"+filename1);
+       InputStream is2 = babynamesUI.class.getResourceAsStream("/resourse/"+filename2);
 	BufferedReader br1 = null;
         BufferedReader br2 = null;
 	String line1 = "";
         String line2 = "";
 	String cvsSplitBy = ",";
-        br1 = new BufferedReader(new FileReader(csvFile1));
-        br2 = new BufferedReader(new FileReader(csvFile2));
-        int i=0;
+        br1 = new BufferedReader(new InputStreamReader(is1));
+        br2 = new BufferedReader(new InputStreamReader(is2));
+        int i=0,a,b;
         line1 = br1.readLine();
         line1 = br1.readLine();
         line2 = br2.readLine();
@@ -378,8 +380,16 @@ public class babynamesUI extends javax.swing.JFrame {
                         String[] name2 = line2.split(cvsSplitBy);
                         String s1=name1[1].trim();
                         String s2=name2[1].trim();
-                        int a=Integer.parseInt(s1.substring(1, s1.length()-1));
-                        int b=Integer.parseInt(s2.substring(1, s2.length()-1));
+                         if(s1.charAt(0)=='"'){
+                         a=Integer.parseInt(s1.substring(1, s1.length()-1));
+                        }else{
+                          a=Integer.parseInt(s1);
+                        }
+                          if(s2.charAt(0)=='"'){
+                        b=Integer.parseInt(s2.substring(1, s2.length()-1));
+                        }else{
+                          b=Integer.parseInt(s2);
+                        }
                         if(a>b)
                         {
 			  name.add(name1[0]);
@@ -433,8 +443,8 @@ public class babynamesUI extends javax.swing.JFrame {
             sex="male";
         else if(female2.isSelected())
             sex="female";
-      int[] Lvalue = new int[70];
-      int[] Lyear=new int[70];
+      int[] Lvalue = new int[100];
+      int[] Lyear=new int[100];
          int j=0; 
          try{
        int year=Integer.parseInt(y);
@@ -443,24 +453,18 @@ public class babynamesUI extends javax.swing.JFrame {
       while(i<=2013)
        {
         String filename=sex+"_cy"+i+"_top.csv";
-        String csvFile = "C:\\Users\\dell\\Desktop\\Baby Names 1944-2013\\"+filename;
+       InputStream is = babynamesUI.class.getResourceAsStream("/resourse/"+filename);
         BufferedReader br = null;
 	String line = "";
 	String cvsSplitBy = ",";
-        br = new BufferedReader(new FileReader(csvFile));
+       br = new BufferedReader(new InputStreamReader(is));
         line = br.readLine();
         while ((line = br.readLine()) != null) {
                        
                        int val;
 		        // use comma as separator
+                       
 			String[] names = line.split(cvsSplitBy);
-                        
-                        
-//                         for (int k=0;k<20;k++)
-//                        {
-//                       temp[k]=s.charAt(k);
-//                        
-//                        }
                         String s1=names[1].trim();
                          String s2=names[0].trim();
                           //System.out.println("name:-"+s1);
